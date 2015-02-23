@@ -1,0 +1,13 @@
+extends layout
+
+block content
+	hr
+	h3 Post News
+		form(action="/news" method="post")
+			textarea(type="text" style="width:400px;height:100px;" name="message")
+			br
+			button(type="submit" style="width:80px;margin-top:10px;" value="submit") Submit
+	br
+	h3 Edit News
+	button(onClick="getNews()" style="margin-bottom:20px;") Get News
+	.newsContainer
