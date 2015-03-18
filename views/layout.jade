@@ -1,9 +1,16 @@
 doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body(onload="validate()")
-    block content
-    script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
-    script(src="/javascripts/rabbitSite.js")
+	head
+		link(rel='stylesheet', href='/stylesheets/style.css')
+	body(onload="validate()")
+		div(style="display:inline-block")
+			a(href="/newsEdit") News Edit
+				span(style='color:black')  |
+			a(href="/rabbitsEdit")  Rabbits Edit
+				span(style='color:black;')  |
+			a(href="#")  Chopn Block Edit
+				span(style='color:black')  |
+			a(href="#")  Carrots Edit
+		block content
+	script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
+	script(src="/javascripts/rabbitSite.js")
