@@ -1,0 +1,54 @@
+<html>
+<head>
+	<title>rabbit edit</title>
+	<link rel='stylesheet', href='/stylesheets/style.css'>
+
+</head>
+<body>
+	<div style="display:inline-block">
+			<a href="/newsEdit"> News Edit </a>
+				<span style='color:black'>  |</span>
+			<a href="/html/rabbitsEdit.html">  Rabbits Edit </a>
+				<span style='color:black;'> |</span>
+			<a href="#">  Chopn Block Edit</a>
+				<span style='color:black'>  |</span>
+			<a href="#">  Carrots Edit</a>
+	</div>
+	<h1> RABBIT EDIT PAGE</h1>
+	<hr>
+	<h3> Create a New Rabbit</h3>
+	<form action="/rabbitsEdit" method="post" id="rabbit-info">
+		<label> Name(no spaces): </label>
+		<input type="text" name="name" id="rabbitName"></input>
+		<br>
+		<br>
+		<label> Description/Adorable Details:</label>
+		<br>
+		<textarea name="description"></textarea>
+		<br>
+		<label> Age(write as text ex. 3 weeks):</label>
+		<input type="text" name="age"></input>
+		<br>
+		<br>
+		<label> Days Left:</label>
+		<input type="number" name="time"></input>
+		<br>
+		<br>
+		<label>Number of Images you are uploading. (If this is wrong will cause Isssueeessss):</label>
+		<br>
+		<input type="number" name="numberImages"></input>
+		<br>
+		<input type="submit" id="submitButton" class="btn btn-lg" value=" Add Rabbit Info">
+	</form>
+	<h3> ADD IMAGES: SUBMIT THE TOP PART FIRST hold shift to click multiple images</h3>
+	<form action="/rabbitsEdit/image", method="post", id="image-form">
+		<input type="file", id="files", name="photo1" multiple></input>
+		<br>
+		<button type="submit" id="upload-images"> submit images:</button>
+	</form>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+	<script type="text/javascript" src="/javascripts/rabbitEdit.js"></script>
+</body>
+</html>

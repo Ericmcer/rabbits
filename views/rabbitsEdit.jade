@@ -7,35 +7,24 @@ block content
 	h1 RABBIT EDIT PAGE
 	hr
 	h3 Create a New Rabbit
-	form(action="/rabbits", method="post", enctype="multipart/form-data" id="newRabbitForm")
+	form(action="/rabbitsEdit", method="post")
 		label Name:
-		input(type="text" name="name" id="newName")
-		br
-		br
-		label Age(write as text ex. 3 weeks):
-		input(type="text" name="age" id="newAge")
+		input(type="text" name="name")
 		br
 		br
 		label Description/Adorable Details:
 		br
-		textarea(name="description" id="newDescription")
-		h4 Image uploads need at least one
-		label image 1:
-		input(type="file" accept="image/*" name="image1" id="image1" onchange="submitRabbit")
+		textarea(name="description")
 		br
-		label image 2:
-		input(type="file" accept="image/*" name="image2" id="image2")
-		br
-		label image 3:
-		input(type="file" accept="image/*" name="image3" id="image3")
-		input(type="hidden" name="imageNumber" id="imageNumber")
+		label Age(write as text ex. 3 weeks):
+		input(type="text" name="age")
 		br
 		br
+		input(type="submit" id="submitButton" class="btn btn-lg" value=" Add Rabbit Info")
+	br
+	form(action="/rabbitsEdit/image", method="post", id="image-form")
+		input(type="file", id="files", name="photo1" multiple)
 		br
-	button(onclick="submitRabbit()" id="submitButton") Add Rabbit Info
-	p(id="submitted" style="color:green;") Form Submitted, Reload page if you want to do another.
-	p(id="error" style="color:red;display:hidden") Need Name, Age, Description and at least one image or else app will suck do you want this to fail.
-	p(id='readyToSubmit' style='color:green;') Looks good, ready to submit if you're done. 
-	p(id='serverError' style='color:red') Error with the server, Tell someone who cares
+		button(type="submit" id="upload-images") submit images
 	hr
 	h3 Delete A Rabbit

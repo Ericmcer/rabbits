@@ -16,8 +16,14 @@ router.get('/news', function(req,res){
 	})
 
 });
+/*Sends all rabbit data*/
 router.get('/rabbits', function(req, res){
-	res.send('nope');
+	Rabbits.query(function(err,rabbits){
+		if(err){
+			res.send(err);
+		}
+			res.send(rabbits);
+	})
 })
 
 //##############################
@@ -30,7 +36,6 @@ router.get('/', function(req, res) {
 //routes for admin page
 router.get('/admin', function(req,res){res.render('admin');})
 router.get('/newsEdit', function(req,res){res.render('newsEdit')});
-router.get('/rabbitsEdit', function(req,res){res.render('rabbitsEdit')});
 //save news from last 30 days
 router.post('/news', function(req,res){
 	News.create({message:req.body.message}, function(err, data){
@@ -42,10 +47,36 @@ router.post('/news', function(req,res){
 });
 //save rabbit Age, Name, Description in DB, on callback get 
 //_id and save images under that with _1,_2,_3 appended
-router.post('/rabbits', function(req,res){
+/*Rabbit storage, each rabbit stored by name with # of images*/
+router.post('/rabbitsEdit', function(req,res){
+	
+	/*variables for DB create*/
+	var timeLeft = new Date().getTime() + req.body.time * 86400000;
 	var dbData = {age:req.body.age, name:req.body.name,
-		description:req.body.description};
-	console.log(req.body.age);
+		description:req.body.description, time:timeLeft,
+		numberImages:req.body.numberImages} 
+	//check for duplicate name
+	Rabbits.checkUnique(req.body.name, function(err,rabbits){
+		if(err){
+			console.log(err);
+		}else{
+			if(rabbits.name === req.body.name){
+				res.send('Duplicate Rabbit names found')
+			}
+			//no duplicate, create new rabbit entry
+			Rabbits.create(dbData, function(err, success){
+				if(err){
+					res.send('DB Error' + JSON.stringify(err));
+				}else{
+					//do nothing
+				}
+			});
+		}
+	});
+})
+
+router.post('/rabbitsEdit/image', function(req, res){
+	console.log(req.files);
 })
 //delete news from certain date
 router.post('/newsDelete', function(req,res){
@@ -59,12 +90,7 @@ router.post('/newsDelete', function(req,res){
 	})
 })
 
-router.post('/carrots', function(req, res){
-	testlist.push(req.body);
-})
-router.get('/carrots', function(req,res){
-	res.send(testlist);
-})
+
 
 
 module.exports = router;

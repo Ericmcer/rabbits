@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var routes = require('./routes/index');
+var multer = require('multer');
+
 
 var app = express();
 mongoose.connect('mongodb://localhost/rabbits');
@@ -21,6 +23,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(multer({dest: './public/rabbitImages/',
+                rename: function(fieldname, filename){
+                        return filename;
+                    }
+                }))
 
 //allow CORS
 app.use(function(req,res,next){

@@ -21,7 +21,7 @@ exports.query = function(cb){
 			return cb(null, rabbits);
 		}
 	})
-}
+};
 exports.delete = function(params, cb){
 	Rabbits.remove(params).exec(function(err,response){
 		if(err){
@@ -30,5 +30,14 @@ exports.delete = function(params, cb){
 			return cb(null, response);
 		}
 
+	})
+};
+exports.checkUnique = function(name, cb){
+	Rabbits.find({"name":name}).exec(function(err,response){
+		if(err){
+			return cb({code:400, message:err})
+		}else{
+			return cb(null, response);
+		}
 	})
 }

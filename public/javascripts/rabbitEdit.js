@@ -1,55 +1,45 @@
-$( document ).ready(function() {
- 	$('#submitted').hide();
-	$('#error').hide();
-	$('#readyToSubmit').hide();
-	$('#serverError').hide();
-	$('#submitButton').prop('disabled', true);
-	$('#newName').keypress(submitRabbit);
-	$('#newAge').keypress(submitRabbit);
-	$('#newDescription').keypress(submitRabbit);
+var imageForm = document.getElementById("image-form");
+var images = document.getElementById("files");
+var subButton = document.getElementById("upload-images");
 
-	$('#submitButton').on('click', submitData);
-})
+document.getElementById("submitButton").onclick = function(){
+	document.getElementById("submitButton").disabled = true;
+	document.getElementById("rabbit-info").submit();
+}
 
-function submitRabbit(){
-	var error = false;
-	var numImages = 0;
-	if($('#newName').val() === ''){
-		error = true;
-	}
-	if($('#newAge').val() === ''){
-		error = true;
-	}
-	if($('#newDescription').val() === ''){
-		error = true;
-	}
-	if($('#image1').val() === ''){
-		error = true;
-		numImages = 1;
-	}
-	if($('#image2').val() === ''){
-		numImages++;
-	}
-	if($('#image3').val() === ''){
-		numImages++;
-	}
-	if(error){
-		$('#error').show();
-		return;
+imageForm.onsubmit = function(event){
+	event.preventDefault();
+	subButton.innerHTML = "uploading Images";
+
+	//access files property of input
+	var files = images.files;
+	if(document.getElementById("rabbitName")){
+		var name = document.getElementById("rabbitName").value;
 	}else{
-		$('#imageNumber').val(numImages);
-		$('#error').hide();
-		$('#readyToSubmit').show();
-		$('#submitButton').prop('disabled', false);
-
+		alert("need to submit rabbit info before uploading images")
 	}
-}
-//submit data, need to build backend route first and db and files for imgs
-var submitData = function(){
-	$('#readyToSubmit').hide();
-	$('#error').hide();
-	$('#submitted').show();
-	$('#serverError').show();
-	$('#submitButton').prop('disabled', true);
-}
+	/* FormData objects provide a way to easily construct a set of 
+	key/value pairs representing form fields and their values, which can 
+	then be easily sent using the XMLHttpRequest send() method.
+	It uses the same format a form would use if the encoding type were 
+	set to "multipart/form-data"*/
+	var formData = new FormData();
+	//append images into formdata object
+	for(var i =0; i < files.length; i++){
+		if(files[i].type.match("image.*")){
+			formData.append("photos", files[i], name + i);
+		}
+	}
 
+	var xhr = new XMLHttpRequest();
+	xhr.open("POST", "/rabbitsEdit/image", true);
+	xhr.onload = function(){
+		if(xhr.status === 200){
+			subButton.innerHTML = "Uploaded"
+
+		}else{
+			alert("error");
+		}
+	}
+	xhr.send(formData);
+}
