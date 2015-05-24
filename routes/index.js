@@ -26,6 +26,9 @@ router.get('/rabbits', function(req, res){
 	})
 })
 
+router.get('/christine', function(req,res){
+	res.render('christine');
+})
 //##############################
 //POST METHODS AND GET METHODS FOR ADMIN PAGE
 //##############################
